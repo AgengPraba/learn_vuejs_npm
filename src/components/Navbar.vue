@@ -1,7 +1,10 @@
 <template>
   <nav class="navbar navbar-light fixed-top">
     <div class="navbar-text ml-auto d-flex">
-      <div class="btn btn-sm btn-outline-success" @click="$emit('toggle')">
+      <div
+        class="btn btn-sm btn-outline-success"
+        @click="$emit('toggle-slide')"
+      >
         <font-awesome-icon icon="dollar-sign"></font-awesome-icon>
       </div>
       <div class="dropdown ml-2" v-if="cart.length > 0">
@@ -31,11 +34,16 @@
               <a
                 href="#"
                 class="badge badge-danger text-white"
-                @click.stop="deleteItem(index)"
+                @click.stop="$emit('delete-item', index)"
                 >-</a
               >
             </div>
           </div>
+          <router-link
+            class="btn btn-sm btn-outline-info text-dark float-right mr-2"
+            to="/checkout"
+            >Checkout</router-link
+          >
         </div>
       </div>
     </div>

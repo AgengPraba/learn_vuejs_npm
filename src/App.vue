@@ -1,29 +1,20 @@
 <template>
   <div id="app" class="container mt-5">
-    <h1>IDShop</h1>
-    <navbar
+    <router-view
       :cart="cart"
       :cartQty="cartQty"
       :cartTotal="cartTotal"
-      @toggle="toggleSliderStatus"
-    ></navbar>
-    <price-slider
-      :sliderStatus="sliderStatus"
       :maximum.sync="maximum"
-    ></price-slider>
-    <product-list
       :products="products"
-      :maximum="maximum"
+      :sliderStatus="sliderStatus"
+      @toggle="toggleSliderStatus"
       @add="addItem"
-    ></product-list>
+      @delete="deleteItem"
+    ></router-view>
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import Navbar from "./components/Navbar.vue";
-import PriceSlider from "./components/PriceSlider.vue";
-import ProductList from "./components/ProductList.vue";
 export default {
   name: "App",
   data: function () {
@@ -34,11 +25,7 @@ export default {
       sliderStatus: false,
     };
   },
-  components: {
-    Navbar,
-    ProductList,
-    PriceSlider,
-  },
+
   mounted: function () {
     fetch("https://hplussport.com/api/products/order/price").then((response) =>
       response.json().then((data) => {
@@ -83,6 +70,13 @@ export default {
         this.cart[productIndex].qty++;
       } else {
         this.cart.push({ product: product, qty: 1 });
+      }
+    },
+    deleteItem: function (key) {
+      if (this.cart[key].qty > 1) {
+        this.cart[key].qty--;
+      } else {
+        this.cart.splice(key, 1);
       }
     },
   },
