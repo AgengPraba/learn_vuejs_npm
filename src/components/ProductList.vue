@@ -35,7 +35,7 @@
 import Price from "./Price.vue";
 export default {
   name: "product-list",
-  component: {
+  components: {
     Price,
   },
   props: ["products", "maximum"],
